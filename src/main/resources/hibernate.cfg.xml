@@ -10,5 +10,8 @@
         <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
 
         <mapping resource="models/Department.hbm.xml" />
+        <mapping resource="models/Employee.hbm.xml" />
+        <mapping resource="models/Position.hbm.xml" />
+        <mapping resource="models/Contract.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

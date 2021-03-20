@@ -1,0 +1,14 @@
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping" package="models">
+    <class name="Position" table="positions">
+        <id name="id" column="pos_id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property name="name" column="name" type="java.lang.String"/>
+        <property name="responsibility" column="responsibility" type="text" />
+        <property name="archived" column="archived" type="java.lang.Boolean"/>
+        <set name="contracts" inverse="true" lazy="false">
+            <key column="pos_id" />
+            <one-to-many class="models.Contract" />
+        </set>
+    </class>
+</hibernate-mapping>

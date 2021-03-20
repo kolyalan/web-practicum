@@ -1,12 +1,26 @@
 package models;
 
+import org.hibernate.Hibernate;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 public class Department {
     private int id;
     private String name;
     private Department headDepartment;
     private boolean archived;
+    private Set<Department> childDeps = new HashSet<>();
 
     public Department() {
+    }
+
+    public Department(String name, Department head) {
+        this.id = 0;
+        this.name = name;
+        this.headDepartment = head;
+        this.archived = false;
     }
 
     public int getId() {
@@ -39,5 +53,32 @@ public class Department {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public Set<Department> getChildDeps() {
+        return childDeps;
+    }
+
+    public void setChildDeps(Set<Department> childDeps) {
+        this.childDeps = childDeps;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Department other = (Department) o;
+        return other.id == id &&
+                other.name.equals(name) &&
+                other.archived == archived;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, archived);
     }
 }

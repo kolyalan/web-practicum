@@ -5,7 +5,11 @@
         </id>
         <property name="name" column="name" type="java.lang.String"/>
 
-        <many-to-one name="headDepartment" column="head_dep_id" />
+        <many-to-one name="headDepartment" column="head_dep_id" class="Department" lazy="false"/>
+        <set name="childDeps" inverse="true" lazy="false">
+            <key column="head_dep_id"/>
+            <one-to-many class="models.Department"/>
+        </set>
         <property name="archived" column="archived" type="java.lang.Boolean"/>
     </class>
 </hibernate-mapping>
