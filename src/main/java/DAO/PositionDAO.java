@@ -1,4 +1,9 @@
 package DAO;
 
-public interface PositionDAO {
+import models.Position;
+
+import java.util.Collection;
+
+public interface PositionDAO extends DAO<Position> {
+    Collection<Position> getActivePositions();
 }

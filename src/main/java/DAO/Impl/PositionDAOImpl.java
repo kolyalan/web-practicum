@@ -1,33 +1,33 @@
 package DAO.Impl;
 
-import DAO.DepartmentDAO;
-import models.Department;
+import DAO.PositionDAO;
+import models.Position;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class DepartmentDAOImpl extends DAOImpl<Department> implements DepartmentDAO {
-
+public class PositionDAOImpl extends DAOImpl<Position> implements PositionDAO {
     @Override
-    public Collection<Department> getActiveDepartments() {
+    public Collection<Position> getActivePositions() {
         Session session = null;
-        List<Department> departments = new ArrayList<>();
+        List<Position> positions = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Query<Department> query = session.createQuery("from Department where archived = true", Department.class);
-            departments = query.list();
+            Query<Position> query = session.createQuery("from Position where archived = true", Position.class);
+            positions = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            System.err.println("getActiveDepartments failed. " + e);
+            System.err.println("getActivePositions failed. " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        return departments;
+        return positions;
     }
 }

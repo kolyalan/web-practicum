@@ -4,14 +4,16 @@
             <generator class="increment"/>
         </id>
         <property name="name" column="name" type="java.lang.String"/>
-        <property name="birthDate" column="birth_date" type="date"/>
+        <property name="birthDate" column="birth_date" type="java.time.LocalDate"/>
         <property name="education" column="education">
-            <type name="org.hibernate.type.EnumType">
+            <type name="models.PostgreSQLEnumType">
                 <param name="enumClass">models.DegreeType</param>
+                <param name="useNamed">true</param>
+                <param name="sqlType">degree_type</param>
             </type>
         </property>
 
-        <property name="employmentDate" column="employment_date" type="date"/>
+        <property name="employmentDate" column="employment_date" type="java.time.LocalDate"/>
         <property name="address" column="address" type="java.lang.String"/>
         <property name="phone" column="phone" type="java.lang.String" />
 

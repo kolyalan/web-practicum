@@ -1,20 +1,32 @@
 package models;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-enum DegreeType {NO_DEGREE, BACHELOR, MASTER, DOCTOR};
-
 public class Employee {
-    private int id;
+    private int id = 0;
     private String name;
-    private Date birthDate;
+    private LocalDate birthDate;
     private DegreeType education;
-    private Date employmentDate;
+    private LocalDate employmentDate;
     private String address;
     private String phone;
-    private Set contracts = new HashSet();
+    private Set<Contract> contracts = new HashSet<>();
+
+    public Employee() {
+    }
+
+    public Employee(String name, LocalDate birthDate, DegreeType education, String address, String phone) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.education = education;
+        this.employmentDate = LocalDate.now();
+        this.address = address;
+        this.phone = phone;
+    }
 
     public int getId() {
         return id;
@@ -32,11 +44,11 @@ public class Employee {
         this.name = name;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -48,11 +60,11 @@ public class Employee {
         this.education = education;
     }
 
-    public Date getEmploymentDate() {
+    public LocalDate getEmploymentDate() {
         return employmentDate;
     }
 
-    public void setEmploymentDate(Date employmentDate) {
+    public void setEmploymentDate(LocalDate employmentDate) {
         this.employmentDate = employmentDate;
     }
 
@@ -78,5 +90,29 @@ public class Employee {
 
     public void setContracts(Set contracts) {
         this.contracts = contracts;
+    }
+
+    public Contract getCurrentContract() {
+        Contract current = null;
+        for (Contract contract : contracts) {
+            if (contract.getQuitDate() == null) {
+                current = contract;
+                break;
+            }
+        }
+        return current;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id && Objects.equals(name, employee.name) && Objects.equals(birthDate, employee.birthDate) && education == employee.education && Objects.equals(employmentDate, employee.employmentDate) && Objects.equals(address, employee.address) && Objects.equals(phone, employee.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, birthDate, education, employmentDate, address, phone);
     }
 }

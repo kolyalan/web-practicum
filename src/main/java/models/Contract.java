@@ -1,14 +1,25 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Contract {
-    private int id;
+    private int id = 0;
     private Employee employee;
     private Department department;
     private Position position;
-    private Date employmentDate;
-    private Date quitDate;
+    private LocalDate employmentDate;
+    private LocalDate quitDate;
+
+    public Contract() {
+    }
+
+    public Contract(Employee employee, Department department, Position position, LocalDate employmentDate, LocalDate quitDate) {
+        this.employee = employee;
+        this.department = department;
+        this.position = position;
+        this.employmentDate = employmentDate;
+        this.quitDate = quitDate;
+    }
 
     public int getId() {
         return id;
@@ -42,19 +53,19 @@ public class Contract {
         this.position = position;
     }
 
-    public Date getEmploymentDate() {
+    public LocalDate getEmploymentDate() {
         return employmentDate;
     }
 
-    public void setEmploymentDate(Date employmentDate) {
+    public void setEmploymentDate(LocalDate employmentDate) {
         this.employmentDate = employmentDate;
     }
 
-    public Date getQuitDate() {
+    public LocalDate getQuitDate() {
         return quitDate;
     }
 
-    public void setQuitDate(Date quitDate) {
+    public void setQuitDate(LocalDate quitDate) {
         this.quitDate = quitDate;
     }
 }

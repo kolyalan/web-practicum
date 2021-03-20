@@ -1,14 +1,24 @@
 package models;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Position {
-    private int id;
+    private int id = 0;
     private String name;
     private String responsibility;
-    private boolean archived;
+    private boolean archived = false;
     private Set<Contract> contracts = new HashSet<>();
+
+    public Position() {
+
+    }
+
+    public Position(String name, String responsibility) {
+        this.name = name;
+        this.responsibility = responsibility;
+    }
 
     public int getId() {
         return id;
@@ -48,5 +58,21 @@ public class Position {
 
     public void setContracts(Set<Contract> workers) {
         this.contracts = workers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return  id == position.id &&
+                archived == position.archived &&
+                Objects.equals(name, position.name) &&
+                Objects.equals(responsibility, position.responsibility);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, responsibility, archived);
     }
 }

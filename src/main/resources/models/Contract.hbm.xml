@@ -4,10 +4,10 @@
             <generator class="increment"/>
         </id>
 
-        <many-to-one name="employee" class="Employee" column="emp_id" unique="true" not-null="true"/>
-        <many-to-one name="department" class="Department" column="dep_id" unique="true" not-null="true" />
-        <many-to-one name="position" class="Position" column="pos_id" unique="true" not-null="true" />
-        <property name="employmentDate" column="employment_date" type="date"/>
-        <property name="quitDate" column="quit_date" type="date"/>
+        <many-to-one name="employee" class="Employee" column="emp_id" unique="true" not-null="true" lazy="false"/>
+        <many-to-one name="department" class="Department" column="dep_id" unique="true" not-null="true" lazy="false"/>
+        <many-to-one name="position" class="Position" column="pos_id" unique="true" not-null="true" lazy="false"/>
+        <property name="employmentDate" column="employment_date" type="java.time.LocalDate"/>
+        <property name="quitDate" column="quit_date" type="java.time.LocalDate"/>
     </class>
 </hibernate-mapping>
