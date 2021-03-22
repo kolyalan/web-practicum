@@ -25,7 +25,7 @@ public class Main {
                 }
             }
         }*/
-/*
+
         Collection<Position> positions = DAOFactory.getInstance().getPositionDAO().getAll();
         if (positions != null) {
             for (Position pos : positions) {
@@ -41,7 +41,7 @@ public class Main {
                 }
             }
         }
-*/
+
 /*
         Collection<Employee> employees = DAOFactory.getInstance().getEmployeeDAO().getAll();
         if (employees != null) {

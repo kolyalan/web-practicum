@@ -4,6 +4,9 @@
     <test name="DAO tests">
         <classes>
             <class name="DepartmentDAOTest"/>
+            <class name="EmployeeDAOTest" />
+            <class name="DepartmentDAOTest"/>
+            <class name="ContractDAOTest"/>
         </classes>
     </test>
 </suite>

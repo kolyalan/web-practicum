@@ -1,4 +1,5 @@
 import DAO.ContractDAO;
+import DAO.DAO;
 import DAO.DAOFactory;
 import models.*;
 import org.testng.Assert;
@@ -21,12 +22,20 @@ public class ContractDAOTest {
 
         ContractDAO contractDAO = DAOFactory.getInstance().getContractDAO();
 
+        int contract_id = contract.getId();
         Contract contract2 = contractDAO.getById(contract.getId());
 
         Assert.assertEquals(contract2, contract);
 
         contract = contract2;
 
+        DAOFactory.getInstance().getContractDAO().delete(contract);
+        DAOFactory.getInstance().getPositionDAO().delete(position);
+        DAOFactory.getInstance().getEmployeeDAO().delete(employee);
+        DAOFactory.getInstance().getDepartmentDAO().delete(department);
 
+        contract2 = DAOFactory.getInstance().getContractDAO().getById(contract_id);
+
+        Assert.assertNull(contract2);
     }
 }

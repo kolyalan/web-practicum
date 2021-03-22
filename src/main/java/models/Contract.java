@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Contract {
     private int id = 0;
@@ -67,5 +68,18 @@ public class Contract {
 
     public void setQuitDate(LocalDate quitDate) {
         this.quitDate = quitDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contract contract = (Contract) o;
+        return id == contract.id && Objects.equals(employee, contract.employee) && Objects.equals(department, contract.department) && Objects.equals(position, contract.position) && Objects.equals(employmentDate, contract.employmentDate) && Objects.equals(quitDate, contract.quitDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, employee, department, position, employmentDate, quitDate);
     }
 }
