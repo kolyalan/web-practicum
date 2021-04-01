@@ -1,13 +1,11 @@
 package DAO.Impl;
 
 import DAO.DAO;
-import models.Department;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,8 +26,6 @@ public class DAOImpl<T> implements DAO<T> {
             session.beginTransaction();
             session.save(entity);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("add failed for " + persistentClass.getName() + ". "+ e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -45,9 +41,7 @@ public class DAOImpl<T> implements DAO<T> {
             session.beginTransaction();
             session.update(entity);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("update failed for " + persistentClass.getName() + ". "+ e);
-        } finally {
+       } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
@@ -57,14 +51,12 @@ public class DAOImpl<T> implements DAO<T> {
     @Override
     public T getById(int dep_id) {
         Session session = null;
-        T entity = null;
+        T entity;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             entity = session.get(persistentClass, dep_id);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getById failed for " + persistentClass.getName() + ". "+ e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -76,21 +68,19 @@ public class DAOImpl<T> implements DAO<T> {
     @Override
     public Collection<T> getAll() {
         Session session = null;
-        List<T> enities = new ArrayList<>();
+        List<T> entities;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Query<T> query = session.createQuery("from " + persistentClass.getName() + "", persistentClass);
-            enities = query.list();
+            entities = query.list();
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getAll failed for " + persistentClass.getName() + ". "+ e);
-        } finally {
+       } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        return enities;
+        return entities;
     }
 
     @Override
@@ -101,8 +91,6 @@ public class DAOImpl<T> implements DAO<T> {
             session.beginTransaction();
             session.delete(entity);
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("delete failed for " + persistentClass.getName() + ". "+ e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

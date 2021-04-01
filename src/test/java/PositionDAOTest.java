@@ -4,6 +4,8 @@ import models.Position;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Collection;
+
 public class PositionDAOTest {
 
     @Test
@@ -20,11 +22,20 @@ public class PositionDAOTest {
         myPos = myPos2;
 
         myPos.setResponsibility(myPos.getResponsibility() + " Особенно себя.");
+        myPos.setArchived(true);
         positionDAO.update(myPos);
 
         myPos2 = positionDAO.getById(myPos.getId());
 
         Assert.assertEquals(myPos, myPos2);
+
+        myPos = myPos2;
+
+        Collection<Position> allPos = positionDAO.getAll();
+        Collection<Position> activePos = positionDAO.getActive();
+
+        Assert.assertTrue(allPos.contains(myPos));
+        Assert.assertFalse(activePos.contains(myPos));
 
         positionDAO.delete(myPos);
     }

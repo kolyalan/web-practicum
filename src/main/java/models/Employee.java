@@ -1,7 +1,6 @@
 package models;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -84,11 +83,11 @@ public class Employee {
         this.phone = phone;
     }
 
-    public Set getContracts() {
+    public Set<Contract> getContracts() {
         return contracts;
     }
 
-    public void setContracts(Set contracts) {
+    public void setContracts(Set<Contract> contracts) {
         this.contracts = contracts;
     }
 

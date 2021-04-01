@@ -4,6 +4,8 @@ import models.Department;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Collection;
+
 public class DepartmentDAOTest {
 
     @Test
@@ -36,6 +38,7 @@ public class DepartmentDAOTest {
         child2 = child22;
 
         child2.setHeadDepartment(child1);
+        child2.setArchived(true);
         departmentDAO.update(child2);
 
         child2 = departmentDAO.getById(child2.getId());
@@ -43,6 +46,17 @@ public class DepartmentDAOTest {
         Assert.assertEquals(child2.getHeadDepartment(), child1);
         child1 = departmentDAO.getById(child1.getId());
         Assert.assertTrue(child1.getChildDeps().contains(child2));
+
+        Collection<Department> allDeps = departmentDAO.getAll();
+        Collection<Department> active = departmentDAO.getActive();
+
+        Assert.assertTrue(allDeps.contains(child1));
+        Assert.assertTrue(allDeps.contains(child2));
+        Assert.assertTrue(allDeps.contains(head));
+
+        Assert.assertTrue(active.contains(head));
+        Assert.assertTrue(active.contains(child1));
+        Assert.assertFalse(active.contains(child2));
 
         departmentDAO.delete(child2);
         departmentDAO.delete(child1);

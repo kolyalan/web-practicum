@@ -9,7 +9,6 @@ import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class EmployeeDAOImpl extends DAOImpl<Employee> implements EmployeeDAO {
     @Override
     public Collection<Employee> getByDepartment(Department entity) {
         Session session = null;
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -28,8 +27,6 @@ public class EmployeeDAOImpl extends DAOImpl<Employee> implements EmployeeDAO {
             query.setParameter("department", entity);
             employees = query.list();
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getActiveDepartments failed. " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -41,7 +38,7 @@ public class EmployeeDAOImpl extends DAOImpl<Employee> implements EmployeeDAO {
     @Override
     public Collection<Employee> getByPosition(Position entity) {
         Session session = null;
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -52,8 +49,6 @@ public class EmployeeDAOImpl extends DAOImpl<Employee> implements EmployeeDAO {
             query.setParameter("position", entity);
             employees = query.list();
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getActiveDepartments failed. " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -65,7 +60,7 @@ public class EmployeeDAOImpl extends DAOImpl<Employee> implements EmployeeDAO {
     @Override
     public Collection<Employee> getByEmploymentDate(LocalDate from, LocalDate to) {
         Session session = null;
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -77,8 +72,6 @@ public class EmployeeDAOImpl extends DAOImpl<Employee> implements EmployeeDAO {
             query.setParameter("to", to);
             employees = query.list();
             session.getTransaction().commit();
-        } catch (Exception e) {
-            System.err.println("getActiveDepartments failed. " + e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
