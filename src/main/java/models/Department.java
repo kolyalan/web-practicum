@@ -57,6 +57,16 @@ public class Department {
         return childDeps;
     }
 
+    public Set<Department> getActiveChildDeps() {
+        Set<Department> ret = new HashSet<>(childDeps);
+        for (Department dep : childDeps) {
+            if (dep.isArchived()) {
+                ret.remove(dep);
+            }
+        }
+        return ret;
+    }
+
     public void setChildDeps(Set<Department> childDeps) {
         this.childDeps = childDeps;
     }

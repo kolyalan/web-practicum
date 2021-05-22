@@ -10,23 +10,34 @@
 <body>
     <nav th:replace="menu::menu('departments')"/>
     <div class="container">
-        <div class="row">
+        <div class="row p-2">
             <div class="col">
-                <h3 th:text="${dept.name}"/>
+                <h3 th:text="${dept.name} + ${(dept.isArchived()?' (архивирован)':'')}"}/>
             </div>
         </div>
         <div class="row p-2">
             <div class="col">
                 <i class="bi bi-arrow-up"></i>
-                <span th:unless="${dept.headDepartment != null}">Нет головного подразделения</span>
+                <span th:unless="${dept.headDepartment != null}" class="p-1 btn btn-outline-secondary disabled">Нет головного подразделения</span>
+                <a th:unless="${dept.headDepartment != null}" class="p-1 btn btn-outline-primary" th:href="'/department/new?child=' + ${dept.id}" role="button">Добавить</a>
                 <a th:href="'/department/' + ${dept.headDepartment.id}" class="p-1 btn btn-outline-secondary" th:unless="${dept.headDepartment == null}" th:text="${dept.headDepartment.name}" />
             </div>
         </div>
         <div class="row p-2">
             <div class="col">
                 <i class="bi bi-arrow-down"></i>
-                <span th:unless="${!#lists.isEmpty(dept.childDeps)}">Нет дочерних подразделений</span>
-                <a class="btn btn-outline-secondary me-1 p-1" th:unless="${#lists.isEmpty(dept.childDeps)}" th:each="child : ${dept.childDeps}" th:text="${child.name}"  th:href="'/department/' + ${child.id}"  />
+                <span th:unless="${!#lists.isEmpty((dept.isArchived()?dept.childDeps:dept.getActiveChildDeps()))}" class="p-1 btn btn-outline-secondary disabled">Нет дочерних подразделений</span>
+                <a class="btn btn-outline-secondary me-1 p-1" th:if="${!dept.isArchived() && !#lists.isEmpty(dept.getActiveChildDeps())}" th:each="child : ${dept.getActiveChildDeps()}" th:text="${child.name}"  th:href="'/department/' + ${child.id}"  />
+                <a class="btn btn-outline-secondary me-1 p-1" th:if="${dept.isArchived() && !#lists.isEmpty(dept.childDeps)}" th:each="child : ${dept.childDeps}" th:text="${child.name}"  th:href="'/department/' + ${child.id}"  />
+                <a th:unless="${dept.isArchived()}" class="p-1 btn btn-outline-primary" th:href="'/department/new?head=' + ${dept.id}" role="button">Добавить</a>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col">
+                <i class="bi bi-three-dots-vertical"></i>
+                <a class="p-1 btn btn-outline-primary" th:href="'/department/edit/' + ${dept.id}" role="button">Изменить</a>
+                <a th:if="${deletable}" class="p-1 btn btn-outline-primary" href="/department/new" role="button">Удалить</a>
+                <a th:if="${achievable}" class="p-1 btn btn-outline-primary" href="/department/new" role="button">Архивировать</a>
             </div>
         </div>
         <div class="row p-2">
