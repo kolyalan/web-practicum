@@ -9,6 +9,37 @@
 <body>
   <nav th:replace="menu::menu('employees')"/>
   <div class="container">
+    <form action="/employees" method="get">
+      <div class="row my-2">
+        <div class="col">
+          <input type="text" name="name" class="form-control" placeholder="Имя" th:value="${nameQ}"/>
+        </div>
+        <div class="col">
+          <select class="form-select" name="education">
+            <option value="">Образование:</option>
+            <option value="NO_DEGREE" th:selected="${educationQ == 'NO_DEGREE'}">Без высшего образования</option>
+            <option value="BACHELOR" th:selected="${educationQ == 'BACHELOR'}">Бакалавр</option>
+            <option value="MASTER" th:selected="${educationQ == 'MASTER'}">Магистр</option>
+            <option value="DOCTOR" th:selected="${educationQ == 'DOCTOR'}">Доктор</option>
+          </select>
+        </div>
+        <div class="col">
+          <select class="form-select" name="dept">
+            <option value="">Отдел:</option>
+            <option th:each="dept : ${allDepts}" th:value="${dept.id}" th:text="${dept.name}" th:selected="${deptQ == dept.id}"/>
+          </select>
+        </div>
+        <div class="col">
+          <select class="form-select" name="position">
+            <option value="">Должность:</option>
+            <option th:each="pos : ${allPositions}" th:value="${pos.id}" th:text="${pos.name}" th:selected="${positionQ == pos.id}"/>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <input type="submit" class="btn btn-outline-primary" value="Поиск"/>
+        </div>
+      </div>
+    </form>
     <div th:replace="employees_list :: list(${employees})"/>
   </div>
 

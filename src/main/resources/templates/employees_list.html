@@ -14,10 +14,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="employee : ${employes}">
+            <tr th:each="employee : ${employes}" th:onclick="'window.location.href=\'/employee/'+ ${employee.id} + '\'; return false'">
                 <th scope="row" th:text="${employee.name}"/>
                 <th scope="row" th:text="${employee.birthDate}"/>
-                <th scope="row" th:text="${employee.education}"/>
+                <th scope="row" th:text="${employee.education.getRussian()}"/>
                 <th scope="row" th:text="${employee.employmentDate}"/>
                 <th scope="row" th:text="${employee.phone}"/>
                 <th scope="row" th:text="${employee.currentContract != null}? ${employee.currentContract.department.name}: 'Нет отдела'"/>

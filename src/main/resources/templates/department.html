@@ -36,8 +36,8 @@
             <div class="col">
                 <i class="bi bi-three-dots-vertical"></i>
                 <a class="p-1 btn btn-outline-primary" th:href="'/department/edit/' + ${dept.id}" role="button">Изменить</a>
-                <a th:if="${deletable}" class="p-1 btn btn-outline-primary" href="/department/new" role="button">Удалить</a>
-                <a th:if="${achievable}" class="p-1 btn btn-outline-primary" href="/department/new" role="button">Архивировать</a>
+                <a th:if="${deletable}" class="p-1 btn btn-outline-primary" th:href="'/department/delete/' + ${dept.id}" role="button">Удалить</a>
+                <a th:if="${achievable}" class="p-1 btn btn-outline-primary" th:href="'/department/archive/' + ${dept.id}" role="button">Архивировать</a>
             </div>
         </div>
         <div class="row p-2">

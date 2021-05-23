@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Department list</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav th:replace="menu::menu('departments')"/>
+    <div class="container">
+        <div class="row p-2">
+            <div class="col">
+                <h3>Работник</h3>
+            </div>
+        </div>
+        <dl class="row">
+            <dt class="col-sm-2">Имя:</dt>
+            <dd class="col-sm-9" th:text="${employee.name}">
+
+            <dt class="col-sm-2">Дата рождения:</dt>
+            <dd class="col-sm-9" th:text="${employee.birthDate}">
+
+            <dt class="col-sm-2">Образование:</dt>
+            <dd class="col-sm-9" th:text="${employee.education.getRussian()}">
+
+            <dt class="col-sm-2">Телефон:</dt>
+            <dd class="col-sm-9" th:text="${employee.phone}">
+
+            <dt class="col-sm-2">Адрес:</dt>
+            <dd class="col-sm-9" th:text="${employee.address}">
+
+            <dt class="col-sm-2">Принят на работу:</dt>
+            <dd class="col-sm-9" th:text="${employee.employmentDate}">
+
+            <dt class="col-sm-2">Текущая должность:</dt>
+            <dd class="col-sm-9">
+                <span th:unless="${employee.getCurrentContract() != null}" class="p-1 btn btn-outline-secondary disabled">Нет</span>
+                <a th:href="'/position/' + ${employee.getCurrentContract().position.id}" class="p-1 btn btn-outline-secondary" th:unless="${employee.getCurrentContract() == null}" th:text="${employee.getCurrentContract().position.name}" />
+            </dd>
+
+            <dt class="col-sm-2">Текущий отдел:</dt>
+            <dd class="col-sm-9">
+                <span th:unless="${employee.getCurrentContract() != null}" class="p-1 btn btn-outline-secondary disabled">Нет</span>
+                <a th:href="'/department/' + ${employee.getCurrentContract().department.id}" class="p-1 btn btn-outline-secondary" th:unless="${employee.getCurrentContract() == null}" th:text="${employee.getCurrentContract().department.name}" />
+            </dd>
+
+        </dl>
+
+        <div class="row p-2">
+            <div class="col">
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+</body>
+</html>

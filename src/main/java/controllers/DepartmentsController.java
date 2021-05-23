@@ -148,6 +148,37 @@ public class DepartmentsController {
         return "redirect:/departments";
     }
 
+    @GetMapping({ "/department/delete/{id:[0-9]+}"})
+    public String delete(@PathVariable int id,
+                       RedirectAttributes redirectAttributes) {
+        DepartmentDAO departmentDAO = DAOFactory.getInstance().getDepartmentDAO();
+        Department dept = departmentDAO.getById(id);
+
+        if (dept != null) {
+            departmentDAO.delete(dept);
+            redirectAttributes.addFlashAttribute("message", "Отдел успешно удален");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Отдел не найден. Удалять нечего.");
+        }
+        return "redirect:/departments";
+    }
+
+    @GetMapping({ "/department/archive/{id:[0-9]+}"})
+    public String archive(@PathVariable int id,
+                         RedirectAttributes redirectAttributes) {
+        DepartmentDAO departmentDAO = DAOFactory.getInstance().getDepartmentDAO();
+        Department dept = departmentDAO.getById(id);
+
+        if (dept != null) {
+            dept.setArchived(true);
+            departmentDAO.update(dept);
+            redirectAttributes.addFlashAttribute("message", "Отдел успешно архивирован");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Отдел не нужно архивировать. Его и так нет.");
+        }
+        return "redirect:/departments";
+    }
+
     private void toList(List<Map.Entry<String, Department>> departments, Department head, String level, boolean archive) {
         if (head == null) return;
         if (!archive && head.isArchived()) return;
