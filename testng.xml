@@ -7,6 +7,7 @@
             <class name="EmployeeDAOTest" />
             <class name="DepartmentDAOTest"/>
             <class name="ContractDAOTest"/>
+            <class name="integratedTests.IntegratedTest"></class>
         </classes>
     </test>
 </suite>

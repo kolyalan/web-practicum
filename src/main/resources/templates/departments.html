@@ -9,14 +9,14 @@
 <body>
     <nav th:replace="menu::menu('departments')"/>
     <div th:unless="${message == null}" class="alert alert-success alert-dismissible fade show position-absolute w-25 end-0 m-3" role="alert">
-        <span th:text="${message}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span id="message" th:text="${message}"></span>
+        <button id="messageClose" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <div class="container">
-        <a class="btn btn-primary m-1" href="/department/new" role="button">Добавить</a>
-        <a th:class="'btn btn-primary m-1' + (${archive}?' active':'')" th:href="'?archived=' + (${archive}?'0':'1')" role="button">Показывать архив</a>
+        <a class="btn btn-primary m-1" href="/department/new" role="button" id="departmentAddButton">Добавить</a>
+        <a id="showArchive" th:class="'btn btn-primary m-1' + (${archive}?' active':'')" th:href="'?archived=' + (${archive}?'0':'1')" role="button">Показывать архив</a>
         <h3 th:if="${#lists.isEmpty(departments)}">No deparments</h3>
-        <ul class="list-unstyled" th:unless="${#lists.isEmpty(departments)}"/>
+        <ul id="deptList" class="list-unstyled" th:unless="${#lists.isEmpty(departments)}"/>
             <li th:each="dept : ${departments}">
                 <span th:utext="${dept.key}"/><a th:utext="${dept.value.name}" th:href="'/department/' + ${dept.value.id}"/>
             </li>

@@ -8,7 +8,9 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 public interface EmployeeDAO extends DAO<Employee> {
-    Collection<Employee> getByDepartment(Department entity);
-    Collection<Employee> getByPosition(Position entity);
+    Collection<Employee> getActiveByDepartment(Department entity);
+    Collection<Employee> getAllByDepartment(Department entity);
+    Collection<Employee> getActiveByPosition(Position entity);
+    Collection<Employee> getAllByPosition(Position entity);
     Collection<Employee> getByEmploymentDate(LocalDate from, LocalDate to);
 }

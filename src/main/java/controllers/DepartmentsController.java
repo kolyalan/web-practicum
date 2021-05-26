@@ -44,18 +44,13 @@ public class DepartmentsController {
         models.Department dept = departmentDAO.getById(id);
 
         EmployeeDAO employeeDAO = DAOFactory.getInstance().getEmployeeDAO();
-        Collection<Employee> employees = employeeDAO.getByDepartment(dept);
-        Collection<Employee> activeEmployees = new LinkedList<>(employees);
-        for (Employee emp : employees) {
-            if (emp.getCurrentContract() == null) {
-                activeEmployees.remove(emp);
-            }
-        }
+        Collection<Employee> employees = employeeDAO.getActiveByDepartment(dept);
+        Collection<Employee> allEmployees = employeeDAO.getAllByDepartment(dept);
 
         model.addAttribute("dept", dept);
-        model.addAttribute("employees", activeEmployees);
-        model.addAttribute("deletable", dept.getChildDeps().isEmpty() && employees.isEmpty());
-        model.addAttribute("achievable", !dept.isArchived() && dept.getActiveChildDeps().isEmpty() && activeEmployees.isEmpty());
+        model.addAttribute("employees", employees);
+        model.addAttribute("deletable", dept.getChildDeps().isEmpty() && allEmployees.isEmpty());
+        model.addAttribute("achievable", !dept.isArchived() && dept.getActiveChildDeps().isEmpty() && employees.isEmpty());
         return "department";
     }
 

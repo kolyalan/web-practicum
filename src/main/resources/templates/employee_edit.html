@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee edit</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav th:replace="menu::menu('employees')"/>
+    <div class="container">
+        <div class="row p-2">
+            <div class="col">
+                <h3>Редактирование (добавление) работника</h3>
+            </div>
+        </div>
+        <form accept-charset="UTF-8" action="/employee/save" method="post">
+            <input type="hidden" name="id" th:value="${(employee==null)?'-1':employee.id}">
+            <dl class="row">
+                <dt class="col-sm-2">Имя:</dt>
+                <dd class="col-sm-9">
+                    <input type="text" id="name" class="form-control" name="empName" th:value="${(employee==null)?'':employee.name}" required>
+                </dd>
+
+                <dt class="col-sm-2">Дата рождения:</dt>
+                <dd class="col-sm-9">
+                    <input type="date" id="birthDate" class="form-control" name="birthDate" th:value="${(employee==null)?'':employee.birthDate}" required>
+                </dd>
+
+                <dt class="col-sm-2">Образование:</dt>
+                <dd class="col-sm-9">
+                    <select class="form-select" id="education" name="education" required>
+                        <option value="">Образование:</option>
+                        <option value="NO_DEGREE" th:selected="${(employee==null)?false: employee.education.toString.equals('NO_DEGREE')}">Без высшего образования</option>
+                        <option value="BACHELOR" th:selected="${(employee==null)?false: employee.education.toString.equals('BACHELOR')}">Бакалавр</option>
+                        <option value="MASTER" th:selected="${(employee==null)?false: employee.education.toString.equals('MASTER')}">Магистр</option>
+                        <option value="DOCTOR" th:selected="${(employee==null)?false: employee.education.toString.equals('DOCTOR')}">Доктор</option>
+                    </select>
+                </dd>
+
+                <dt class="col-sm-2">Телефон:</dt>
+                <dd class="col-sm-9">
+                    <input type="tel" id="phone" class="form-control" name="phone" th:value="${(employee==null)?'':employee.phone}" required>
+                </dd>
+
+                <dt class="col-sm-2">Адрес:</dt>
+                <dd class="col-sm-9">
+                    <input type="text" id="address" class="form-control" name="address" th:value="${(employee==null)?'':employee.address}" required>
+                </dd>
+
+                <dt class="col-sm-2">Текущая должность:</dt>
+                <dd class="col-sm-9">
+                    <select class="form-select" id="position" name="position">
+                        <option value="">Нет</option>
+                        <option th:each="pos : ${allPositions}" th:value="${pos.id}" th:text="${pos.name}" th:selected="${employee != null && employee.getCurrentContract() != null && employee.getCurrentContract().position.id == pos.id}"/>
+                    </select>
+                </dd>
+
+                <dt class="col-sm-2">Текущий отдел:</dt>
+                <dd class="col-sm-9">
+                    <select class="form-select" id="department" name="dept">
+                        <option value="">Нет</option>
+                        <option th:each="dept : ${allDepts}" th:value="${dept.id}" th:text="${dept.name}" th:selected="${employee != null && employee.getCurrentContract() != null && employee.getCurrentContract().department.id == dept.id}"/>
+                    </select>
+                </dd>
+            </dl>
+            <div class="row">
+                <div class="col">
+                    <input id="empSaveButton" class="btn btn-outline-primary" type="submit" value="Сохранить">
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+</body>
+</html>

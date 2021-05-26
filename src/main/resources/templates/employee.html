@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Department list</title>
+    <title>Employee Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 </head>
 <body>
-    <nav th:replace="menu::menu('departments')"/>
+    <nav th:replace="menu::menu('employees')"/>
     <div class="container">
         <div class="row p-2">
             <div class="col">
@@ -17,19 +17,19 @@
         </div>
         <dl class="row">
             <dt class="col-sm-2">Имя:</dt>
-            <dd class="col-sm-9" th:text="${employee.name}">
+            <dd class="col-sm-9" id="empName" th:text="${employee.name}">
 
             <dt class="col-sm-2">Дата рождения:</dt>
-            <dd class="col-sm-9" th:text="${employee.birthDate}">
+            <dd class="col-sm-9" id="empBirthDate" th:text="${employee.birthDate}">
 
             <dt class="col-sm-2">Образование:</dt>
-            <dd class="col-sm-9" th:text="${employee.education.getRussian()}">
+            <dd class="col-sm-9" id="empEducation" th:text="${employee.education.getRussian()}">
 
             <dt class="col-sm-2">Телефон:</dt>
-            <dd class="col-sm-9" th:text="${employee.phone}">
+            <dd class="col-sm-9" id="empPhone" th:text="${employee.phone}">
 
             <dt class="col-sm-2">Адрес:</dt>
-            <dd class="col-sm-9" th:text="${employee.address}">
+            <dd class="col-sm-9" id="empAddress" th:text="${employee.address}">
 
             <dt class="col-sm-2">Принят на работу:</dt>
             <dd class="col-sm-9" th:text="${employee.employmentDate}">
@@ -45,13 +45,32 @@
                 <span th:unless="${employee.getCurrentContract() != null}" class="p-1 btn btn-outline-secondary disabled">Нет</span>
                 <a th:href="'/department/' + ${employee.getCurrentContract().department.id}" class="p-1 btn btn-outline-secondary" th:unless="${employee.getCurrentContract() == null}" th:text="${employee.getCurrentContract().department.name}" />
             </dd>
-
         </dl>
-
-        <div class="row p-2">
+        <div class="row">
             <div class="col">
+                <a id="empEdit" class="p-1 btn btn-outline-primary" th:href="'/employee/edit/' + ${employee.id}" role="button">Изменить</a>
+                <a id="empDismiss" th:if="${employee.getCurrentContract() != null}" class="p-1 btn btn-outline-primary" th:href="'/employee/dismiss/' + ${employee.id}" role="button">Уволить</a>
             </div>
         </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Должность</th>
+                <th scope="col">Подразделение</th>
+                <th scope="col">Начало работы</th>
+                <th scope="col">Окончание работы</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contract : ${employee.contracts}" th:onclick="'window.location.href=\'/position/'+ ${contract.position.id} + '\'; return false'">
+                <th scope="row" th:text="${contract.position.name}"/>
+                <th scope="row" th:text="${contract.department.name}"/>
+                <th scope="row" th:text="${contract.employmentDate}"/>
+                <th scope="row" th:text="${(contract.quitDate == null)?'По настоящее время':contract.quitDate}"/>
+            </tr>
+            </tbody>
+        </table>
 
     </div>
 

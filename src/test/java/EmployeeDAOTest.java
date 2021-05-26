@@ -53,9 +53,9 @@ public class EmployeeDAOTest {
         DAOFactory.getInstance().getEmployeeDAO().add(employee);
         DAOFactory.getInstance().getContractDAO().add(contract);
 
-        Collection<Employee> employees_dep = DAOFactory.getInstance().getEmployeeDAO().getByDepartment(department);
+        Collection<Employee> employees_dep = DAOFactory.getInstance().getEmployeeDAO().getActiveByDepartment(department);
 
-        Collection<Employee> employees_pos = DAOFactory.getInstance().getEmployeeDAO().getByPosition(position);
+        Collection<Employee> employees_pos = DAOFactory.getInstance().getEmployeeDAO().getActiveByPosition(position);
 
 
         Collection<Employee> employees_before = DAOFactory.getInstance().getEmployeeDAO().getByEmploymentDate(LocalDate.now().minusDays(2), LocalDate.now().minusDays(1));
@@ -64,7 +64,7 @@ public class EmployeeDAOTest {
 
         Assert.assertEquals(employees_dep.size(), 1);
         Assert.assertEquals(employees_pos.size(), 1);
-        Assert.assertEquals(employees_before.size(), 0);
+        Assert.assertEquals(employees_before.size(), 3);
         Assert.assertEquals(employees_now.size(), 1);
         Assert.assertEquals(employees_future.size(), 0);
 
